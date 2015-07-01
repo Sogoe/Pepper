@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>图片加载器</title>
+    <script src="../core/polyfill.js"></script>
+    <script src="../core/pepper.js"></script>
+</head>
+<body>
+    <canvas id="canvas" width="320" height="480"></canvas>
+</body>
+    <script>
+        var game = new Pepper('imageLoader', 'canvas'),
+            canvas = document.getElementById('canvas'),
+            ctx = canvas.getContext('2d'),
+            imageUrls = ['http://img0.imgtn.bdimg.com/it/u=1874938499,4077070265&fm=21&gp=0.jpg',
+                    'http://www.jpcai.com/upfiles/photo/200606/20060624180914512.jpg',
+                    'http://www.jpcai.com/upfiles/photo/200505/20050522175925620.jpg'];
+
+        function complete() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for(var i = 0; i < imageUrls.length; i++) {
+                ctx.drawImage(game.getImage(imageUrls[i]), 20, 20 + 80 * i, 70, 70);
+            }
+        }
+
+        function callBack(percent) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.font = "30px bold Arial";
+            ctx.fillText(parseInt(percent).toString(), 10, 50);
+            if(percent == 100) {
+                complete();
+            }
+        }
+
+        for(var i = 0; i < imageUrls.length; i++) {
+            game.addImage(imageUrls[i]);
+        }
+        game.setImageProgressCallBack(callBack);
+        game.startLoadingImages();
+    </script>
+</html>
