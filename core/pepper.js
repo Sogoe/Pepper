@@ -15,6 +15,11 @@ var Pepper = function(name, canvasId) {
 };
 
 Pepper.prototype = {
+    //¾«ÁéÀà
+    Sprite: function(name, painter) {
+        return new Sprite(this, name, painter);
+    },
+
     getImage: function(imageUrl) {
         return this.images[imageUrl];
     },
